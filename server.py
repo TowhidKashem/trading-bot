@@ -14,12 +14,20 @@ def account():
     }
 
 
-# @app.route('/buy', methods=['POST'])
-# def buy_stock():
-#     account = buy_stock.buy()
-#     return {
-#         'account': account
-#     }
+@app.route('/buy', methods=['POST'])
+def buy_stock():
+    buy = buy_stock.buy()
+    return {
+        'success': buy
+    }
+
+
+@app.route('/sell', methods=['POST'])
+def sell_stock():
+    sell = sell_stock.sell()
+    return {
+        'success': sell
+    }
 
 
 app.run()
