@@ -19,8 +19,16 @@ class TradeBot():
         )
 
     def get_account(self):
-        account = self.api.get_account()
-        return account._raw
+        try:
+            account = self.api.get_account()
+            return {
+                'account': account._raw
+            }
+
+        except(alpaca_trade_api.rest.APIError) as error:
+            return {
+                'error': error
+            }
 
 
 trade_bot = TradeBot()

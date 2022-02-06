@@ -1,16 +1,36 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify
 from service.TradeBot import trade_bot
 from service.BuyStock import buy_stock
 from service.SellStock import sell_stock
+from service.StockData import stock_data
 
 app = Flask(__name__)
 
 
 @app.route('/account', methods=['GET'])
 def account():
-    account = trade_bot.get_account()
+    response = trade_bot.get_account()
+
+    if response.get('error'):
+        return {
+            'account': None,
+            'success': False,
+            'message': response['error']
+        }, 500
+    else:
+        account = response['account']
+        status = 403 if account['account_blocked'] or account['status'] != 'ACTIVE' else 200
+        return {
+            'account': response['account'],
+            'success': True
+        }, status
+
+
+@app.route('/live-stream', methods=['GET'])
+def live_stream():
+    stream = stock_data.live_stream()
     return {
-        'account': account
+        'stream': stream
     }
 
 
