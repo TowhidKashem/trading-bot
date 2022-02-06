@@ -1,4 +1,4 @@
-from TradeBot import TradeBot
+from service.TradeBot import TradeBot
 
 
 class SellStock(TradeBot):

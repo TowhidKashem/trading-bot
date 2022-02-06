@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-from TradeBot import trade_bot
-from BuyStock import buy_stock
-from SellStock import sell_stock
+from service.TradeBot import trade_bot
+from service.BuyStock import buy_stock
+from service.SellStock import sell_stock
 
 app = Flask(__name__)
 
