@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 class TradeBot():
     __APCA_API_KEY_ID = os.getenv('APCA_API_KEY_ID')
     __APCA_API_SECRET_KEY = os.getenv('APCA_API_SECRET_KEY')
