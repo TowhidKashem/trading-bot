@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
+        <script>
+            class TradingBot {
+                constructor() {
+                    this.baseUrl = 'http://127.0.0.1:5000/'
+                    this.form = document.querySelector('form')
+                    this.init()
+                }
+
+                init() {
+                    this.form.addEventListener('submit', (e) => {
+                        e.preventDefault()
+                        this.buy(e.currentTarget)
+                    })
+                }
+
+                async buy(form) {
+                    const formData = new FormData(form)
+                    const options = Object.fromEntries(formData.entries())
+
+                    if (!options.symbol || !options.quantity) {
+                        return this.handleError('Please fill in all fields')
+                    }
+
+                    try {
+                        const purchase = await fetch(this.baseUrl + 'buy', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(options)
+                        })
+
+                        if (purchase.success) {
+                            alert('success')
+                        } else {
+                            this.handleError(purchase.error_code)
+                        }
+                    } catch(error) {
+                        this.handleError('UNKNOWN_ERROR')
+                    }
+                }
+
+                handleError(errorCode) {
+                    const friendlyErrorMessageMap = {
+                        UNKNOWN_ERROR: 'Oops something went wrong!',
+                        INVALID_ARGUMENTS: 'Invalid or no arguments supplied'
+                    }
+                    alert(friendlyErrorMessageMap[errorCode] || errorCode)
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const tradingBot = new TradingBot()
+            })
+        </script>
+    </head>
+    <body>
+        <form class="p-5">
+            <div class="form-group">
+                <input type="text" name="symbol" placeholder="Symbol" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="quantity" placeholder="Quantity" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Order</button>    
+        </form>
+    </body>
+</html>
