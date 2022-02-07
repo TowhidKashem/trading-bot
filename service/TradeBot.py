@@ -32,16 +32,5 @@ class TradeBot():
                 'error': error
             }
 
-    def get_stocks(self):
-        try:
-            orders = self.api.list_orders()
-            return {
-                'orders': orders
-            }
-        except(error):
-            return {
-                'error': error
-            }
-
 
 trade_bot = TradeBot()

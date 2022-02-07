@@ -37,7 +37,7 @@ def account():
 
 
 @app.route('/buy', methods=['POST'])
-def buy_stock():
+def buy():
     args = request.get_json()
     required_args = ['symbol', 'quantity']
 
@@ -56,7 +56,7 @@ def buy_stock():
 
 
 @app.route('/sell', methods=['POST'])
-def sell_stock():
+def sell():
     sell = sell_stock.sell()
     return {
         'success': sell
@@ -74,7 +74,7 @@ def live_stream():
 # web page
 @app.route('/page', methods=['GET'])
 def page():
-    orders = trade_bot.get_stocks()
+    orders = stock_data.get_orders()
     return render_template('index.html', orders=orders)
 
 

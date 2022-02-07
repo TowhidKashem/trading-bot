@@ -18,9 +18,9 @@ class BuyStock(TradeBot):
                 qty=quantity,
                 time_in_force='day',
             )
-
-            print(order)
-
+            return {
+                'receipt': order
+            }
         except(error):
             print(error)
 
