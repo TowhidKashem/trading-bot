@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+error = alpaca_trade_api.rest.APIError
+
 
 class TradeBot():
     __APCA_API_KEY_ID = os.getenv('APCA_API_KEY_ID')
@@ -15,6 +17,7 @@ class TradeBot():
             self.__APCA_API_KEY_ID,
             self.__APCA_API_SECRET_KEY,
             self.__APCA_API_BASE_URL,
+            raw_data='raw_data',
             api_version='v2'
         )
 
@@ -22,10 +25,20 @@ class TradeBot():
         try:
             account = self.api.get_account()
             return {
-                'account': account._raw
+                'account': account
+            }
+        except(error):
+            return {
+                'error': error
             }
 
-        except(alpaca_trade_api.rest.APIError) as error:
+    def get_stocks(self):
+        try:
+            orders = self.api.list_orders()
+            return {
+                'orders': orders
+            }
+        except(error):
             return {
                 'error': error
             }

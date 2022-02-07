@@ -1,5 +1,5 @@
 from constants import *
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, render_template
 from operator import itemgetter
 from service.TradeBot import trade_bot
 from service.BuyStock import buy_stock
@@ -71,10 +71,11 @@ def live_stream():
     }
 
 
-# temp: for testing
+# web page
 @app.route('/page', methods=['GET'])
-def home():
-    return send_from_directory('views', 'index.html')
+def page():
+    orders = trade_bot.get_stocks()
+    return render_template('index.html', orders=orders)
 
 
 app.run()

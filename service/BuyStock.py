@@ -1,6 +1,8 @@
 from service.TradeBot import TradeBot
 from alpaca_trade_api import rest
 
+error = rest.APIError
+
 
 class BuyStock(TradeBot):
     def __init__(self):
@@ -19,7 +21,7 @@ class BuyStock(TradeBot):
 
             print(order)
 
-        except(rest.APIError) as error:
+        except(error):
             print(error)
 
 
