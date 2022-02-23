@@ -7,7 +7,7 @@ load_dotenv()
 error = alpaca_trade_api.rest.APIError
 
 
-class TradeBot():
+class TradeBot:
     __APCA_API_KEY_ID = os.getenv('APCA_API_KEY_ID')
     __APCA_API_SECRET_KEY = os.getenv('APCA_API_SECRET_KEY')
     __APCA_API_BASE_URL = os.getenv('APCA_API_BASE_URL')
